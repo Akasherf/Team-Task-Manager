@@ -3,12 +3,14 @@ package com.taskmanager.demo.controller;
 import com.taskmanager.demo.model.Project;
 import com.taskmanager.demo.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/projects")
+@CrossOrigin("*")
 public class ProjectController {
 
     @Autowired
@@ -20,8 +22,8 @@ public class ProjectController {
     }
 
     @PostMapping
-    public Project createProject(@RequestBody Project project) {
-        return projectService.createProject(project);
+    public Project createProject(@RequestBody Project project, Authentication authentication) {
+        return projectService.createProject(project, authentication.getName());
     }
 
     @GetMapping("/{id}")
