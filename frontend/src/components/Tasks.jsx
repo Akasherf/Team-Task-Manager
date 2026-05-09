@@ -14,7 +14,8 @@ const Tasks = () => {
     const fetchTasks = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`http://localhost:8084/api/tasks/project/${projectId}`, {
+            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8084';
+            const response = await axios.get(`${API_URL}/api/tasks/project/${projectId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setTasks(response.data);
@@ -31,7 +32,8 @@ const Tasks = () => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');
-            await axios.post('http://localhost:8084/api/tasks', {
+            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8084';
+            await axios.post(`${API_URL}/api/tasks`, {
                 title,
                 description,
                 project: { id: projectId },
@@ -52,7 +54,8 @@ const Tasks = () => {
     const handleStatusChange = async (taskId, newStatus) => {
         try {
             const token = localStorage.getItem('token');
-            await axios.put(`http://localhost:8084/api/tasks/${taskId}/status?status=${newStatus}`, {}, {
+            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8084';
+            await axios.put(`${API_URL}/api/tasks/${taskId}/status?status=${newStatus}`, {}, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             fetchTasks();

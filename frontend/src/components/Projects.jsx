@@ -12,7 +12,8 @@ const Projects = () => {
     const fetchProjects = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get('http://localhost:8084/api/projects', {
+            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8084';
+            const response = await axios.get(`${API_URL}/api/projects`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setProjects(response.data);
@@ -29,7 +30,8 @@ const Projects = () => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');
-            await axios.post('http://localhost:8084/api/projects', { name, description }, {
+            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8084';
+            await axios.post(`${API_URL}/api/projects`, { name, description }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setMessage({ text: 'Project created successfully!', type: 'success' });
