@@ -18,7 +18,7 @@ const Tasks = () => {
             const response = await axios.get(`${API_URL}/api/tasks/project/${projectId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            setTasks(response.data);
+            setTasks(Array.isArray(response.data) ? response.data : []);
         } catch (err) {
             console.error(err);
         }
@@ -78,7 +78,7 @@ const Tasks = () => {
                     <div className="col-md-8">
                         <h2>Task Board</h2>
                         <div className="row mt-3">
-                            {tasks.map(t => (
+                            {tasks?.map(t => (
                                 <div key={t.id} className="col-md-6 mb-3">
                                     <div className="card shadow-sm h-100 border-0 bg-light">
                                         <div className="card-body">

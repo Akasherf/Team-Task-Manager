@@ -16,7 +16,7 @@ const Projects = () => {
             const response = await axios.get(`${API_URL}/api/projects`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            setProjects(response.data);
+            setProjects(Array.isArray(response.data) ? response.data : []);
         } catch (err) {
             console.error(err);
         }
@@ -51,7 +51,7 @@ const Projects = () => {
                     <div className="col-md-8">
                         <h2>All Projects</h2>
                         <div className="list-group mt-3 shadow-sm">
-                            {projects.map(p => (
+                            {projects?.map(p => (
                                 <div key={p.id} className="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                                     <div>
                                         <h5 className="mb-1">{p.name}</h5>
