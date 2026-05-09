@@ -23,6 +23,6 @@ public class Project {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "created_by_id", nullable = false)
-    @com.fasterxml.jackson.annotation.JsonIgnoreProperties({"password", "role"})
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private User createdBy;
 }

@@ -29,11 +29,11 @@ public class Task {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id", nullable = false)
-    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("tasks")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Project project;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "assigned_to_id")
-    @com.fasterxml.jackson.annotation.JsonIgnoreProperties({"password", "role"})
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private User assignedTo;
 }
