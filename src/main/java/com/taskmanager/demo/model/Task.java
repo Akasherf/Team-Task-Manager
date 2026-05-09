@@ -27,4 +27,11 @@ public class Task {
 
     private LocalDate dueDate;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id", nullable = false)
+    private Project project;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assigned_to_id")
+    private User assignedTo;
 }
