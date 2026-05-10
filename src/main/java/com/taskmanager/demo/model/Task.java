@@ -30,11 +30,9 @@ public class Task {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id", nullable = false)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Project project;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "assigned_to_id")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User assignedTo;
 }
