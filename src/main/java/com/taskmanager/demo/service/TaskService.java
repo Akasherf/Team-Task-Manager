@@ -28,7 +28,12 @@ public class TaskService {
                 
         if (creator.getRole() != Role.ADMIN) {
             System.out.println("DEBUG: Role is NOT ADMIN. Blocking request.");
-            throw new RuntimeException("Permission Denied: Only Admins can create tasks. Your role is: " + creator.getRole());
+            throw new RuntimeException("Permission Denied: Only Admins can create tasks.");
+        }
+
+        // CRITICAL FIX: Ensure project is not null before saving
+        if (task.getProject() == null || task.getProject().getId() == null) {
+            throw new RuntimeException("Project ID is missing! Cannot create task without a project.");
         }
 
         // Verify assigned user exists if provided

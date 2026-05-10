@@ -30,14 +30,19 @@ const Tasks = () => {
 
     const handleCreateTask = async (e) => {
         e.preventDefault();
+        if (!projectId) {
+            setMessage({ text: 'Error: Project ID is missing from the URL.', type: 'danger' });
+            return;
+        }
+        console.log("DEBUG: Creating task for Project ID:", projectId);
         try {
             const token = localStorage.getItem('token');
             const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8084';
             await axios.post(`${API_URL}/api/tasks`, {
                 title,
                 description,
-                project: { id: projectId },
-                assignedTo: assignedToId ? { id: assignedToId } : null
+                project: { id: parseInt(projectId) },
+                assignedTo: assignedToId ? { id: parseInt(assignedToId) } : null
             }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
