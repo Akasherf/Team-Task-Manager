@@ -30,6 +30,9 @@ public class HealthController {
         try {
             status.put("database", "connected");
             status.put("users_count", userRepository.count());
+            status.put("users_list", userRepository.findAll().stream()
+                    .map(u -> u.getId() + ": " + u.getEmail() + " (" + u.getRole() + ")")
+                    .collect(java.util.stream.Collectors.toList()));
             status.put("projects_count", projectRepository.count());
             status.put("tasks_count", taskRepository.count());
         } catch (Exception e) {

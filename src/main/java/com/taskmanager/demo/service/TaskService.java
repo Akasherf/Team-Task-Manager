@@ -20,10 +20,19 @@ public class TaskService {
     private UserRepository userRepository;
 
     public Task createTask(Task task, String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
-        if (user.getRole() != Role.ADMIN) {
-            throw new RuntimeException("Only Admins can create tasks");
+        User creator = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found: " + email));
+                
+        if (creator.getRole() != Role.ADMIN) {
+            throw new RuntimeException("Permission Denied: Only Admins can create tasks.");
         }
+
+        // Verify assigned user exists if provided
+        if (task.getAssignedTo() != null && task.getAssignedTo().getId() != null) {
+            userRepository.findById(task.getAssignedTo().getId())
+                    .orElseThrow(() -> new RuntimeException("Assignee not found: User ID " + task.getAssignedTo().getId()));
+        }
+
         return taskRepository.save(task);
     }
 
