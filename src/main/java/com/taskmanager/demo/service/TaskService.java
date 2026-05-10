@@ -20,11 +20,15 @@ public class TaskService {
     private UserRepository userRepository;
 
     public Task createTask(Task task, String email) {
+        System.out.println("DEBUG: Attempting to create task by user: " + email);
         User creator = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found: " + email));
+        
+        System.out.println("DEBUG: User Role found: " + creator.getRole());
                 
         if (creator.getRole() != Role.ADMIN) {
-            throw new RuntimeException("Permission Denied: Only Admins can create tasks.");
+            System.out.println("DEBUG: Role is NOT ADMIN. Blocking request.");
+            throw new RuntimeException("Permission Denied: Only Admins can create tasks. Your role is: " + creator.getRole());
         }
 
         // Verify assigned user exists if provided
