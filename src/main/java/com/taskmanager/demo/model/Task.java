@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDate;
 
 @Entity
@@ -29,11 +30,11 @@ public class Task {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id", nullable = false)
-    @com.fasterxml.jackson.annotation.JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Project project;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "assigned_to_id")
-    @com.fasterxml.jackson.annotation.JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User assignedTo;
 }
