@@ -39,7 +39,8 @@ const Projects = () => {
             setDescription('');
             fetchProjects();
         } catch (err) {
-            setMessage({ text: 'Error: Only Admins can create projects.', type: 'danger' });
+            const errorMessage = err.response?.data?.message || 'Error: Only Admins can create projects.';
+            setMessage({ text: errorMessage, type: 'danger' });
         }
     };
 

@@ -47,7 +47,8 @@ const Tasks = () => {
             setAssignedToId('');
             fetchTasks();
         } catch (err) {
-            setMessage({ text: 'Error: Only Admins can create tasks.', type: 'danger' });
+            const errorMessage = err.response?.data?.message || 'Error: Only Admins can create tasks.';
+            setMessage({ text: errorMessage, type: 'danger' });
         }
     };
 
